@@ -17,11 +17,11 @@ class _LoginViewState extends ConsumerState<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Flutter Firebase App')),
+      appBar: AppBar(title: const Text('Flutter Firebase App')),
       body: Center(
         child: Column(
           children: [
-            Text(
+            const Text(
               'text',
               style: TextStyle(color: Colors.amber),
             ),

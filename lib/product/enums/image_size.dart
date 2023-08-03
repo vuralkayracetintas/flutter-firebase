@@ -3,5 +3,6 @@ enum ImageSizes {
 
   final int value;
 
+  // ignore: sort_constructors_first
   const ImageSizes(this.value);
 }
