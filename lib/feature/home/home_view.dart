@@ -14,11 +14,12 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
-    CollectionReference news = FirebaseFirestore.instance.collection('news');
+    final CollectionReference news =
+        FirebaseFirestore.instance.collection('news');
 
     final response = news.withConverter(
       fromFirestore: (snapshot, options) {
-        return News().fromFirebase(snapshot);
+        return const News().fromFirebase(snapshot);
       },
       toFirestore: (value, options) {
         // ignore: unnecessary_null_comparison
@@ -31,8 +32,10 @@ class _HomeViewState extends State<HomeView> {
       appBar: AppBar(),
       body: FutureBuilder(
         future: response,
-        builder: (BuildContext context,
-            AsyncSnapshot<QuerySnapshot<News>> snapshot) {
+        builder: (
+          BuildContext context,
+          AsyncSnapshot<QuerySnapshot<News>> snapshot,
+        ) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
               return const Text('none');
@@ -58,10 +61,11 @@ class _HomeViewState extends State<HomeView> {
                             height: context.sized.dynamicHeight(0.1),
                           ),
                           Image.network(
-                              'https://firebasestorage.googleapis.com/v0/b/flutter-full-eadb7.appspot.com/o/beyaz_saray.jpeg?alt=media&token=53270cfe-b6eb-43b2-aea1-220faa053897'),
+                            'https://firebasestorage.googleapis.com/v0/b/flutter-full-eadb7.appspot.com/o/beyaz_saray.jpeg?alt=media&token=53270cfe-b6eb-43b2-aea1-220faa053897',
+                          ),
                           Text(
                             values[index].title ?? '',
-                            style: context.textTheme.labelLarge,
+                            style: context.general.textTheme.labelLarge,
                           ),
                           Text(values[index].category ?? ''),
                         ],
