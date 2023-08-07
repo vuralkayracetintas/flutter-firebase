@@ -40,7 +40,7 @@ class _SplashViewState extends ConsumerState<SplashView>
           children: [
             IconConstants.appIcon.toImage,
             Padding(
-              padding: context.onlyTopPaddingLow,
+              padding: context.padding.onlyTopLow,
               child: WavyBoldText(title: StringConstrans.appName),
             ),
           ],
@@ -61,7 +61,7 @@ mixin _SplashViewListenMixin on ConsumerState<SplashView> {
       }
       if (next.isRedirectHome != null) {
         if (next.isRedirectHome!) {
-          context.navigateToPage(const HomeView());
+          context.route.navigateToPage(const HomeView());
         } else {
           // false
         }

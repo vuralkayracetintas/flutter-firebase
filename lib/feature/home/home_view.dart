@@ -40,7 +40,7 @@ class _HomeViewState extends State<HomeView> {
             case ConnectionState.none:
               return const Text('none');
             case ConnectionState.waiting:
-              return const Text('waiting');
+              return const CircularProgressIndicator();
             case ConnectionState.active:
               return const Text('active');
             case ConnectionState.done:
