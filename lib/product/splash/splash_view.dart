@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/feature/home/home_view.dart';
-import 'package:flutter_firebase/product/constans/color_constants.dart';
 import 'package:flutter_firebase/product/constans/index.dart';
 import 'package:flutter_firebase/product/enums/icon_enum.dart';
 import 'package:flutter_firebase/product/splash/splash_provider.dart';
@@ -26,7 +25,7 @@ class _SplashViewState extends ConsumerState<SplashView>
   @override
   void initState() {
     super.initState();
-    ref.read(splashProvider.notifier).checkApplicationVersion(''.version);
+    ref.read(splashProvider.notifier).checkApplicationVersion(''.ext.version);
   }
 
   @override
@@ -41,7 +40,7 @@ class _SplashViewState extends ConsumerState<SplashView>
             IconConstants.appIcon.toImage,
             Padding(
               padding: context.padding.onlyTopLow,
-              child: WavyBoldText(title: StringConstrans.appName),
+              child: const WavyBoldText(title: StringConstrans.appName),
             ),
           ],
         ),
