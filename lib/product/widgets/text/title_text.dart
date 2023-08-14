@@ -12,9 +12,11 @@ class TitleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(value,
-        style: context.general.textTheme.headlineSmall?.copyWith(
-          fontWeight: FontWeight.bold,
-        ));
+    return Text(
+      value,
+      style: context.general.textTheme.headlineSmall?.copyWith(
+        fontWeight: FontWeight.bold,
+      ),
+    );
   }
 }

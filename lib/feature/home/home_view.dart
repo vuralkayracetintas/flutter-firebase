@@ -171,7 +171,7 @@ class _RecommendedCard extends StatelessWidget {
         children: [
           Image.network(
             _RecommendedListView.cmImage,
-            errorBuilder: (context, error, stackTrace) => Placeholder(),
+            errorBuilder: (context, error, stackTrace) => const Placeholder(),
             height: 96,
           ),
           const Expanded(
@@ -247,7 +247,7 @@ class _HorizontalCard extends StatelessWidget {
           padding: context.padding.onlyRightNormal,
           child: Image.network(
             _BrowseHorizontalListView.palaceImage,
-            errorBuilder: (context, error, stackTrace) => Placeholder(),
+            errorBuilder: (context, error, stackTrace) => const Placeholder(),
           ),
         ),
         Positioned.fill(
