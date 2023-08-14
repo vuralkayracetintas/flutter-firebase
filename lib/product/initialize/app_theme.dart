@@ -7,17 +7,21 @@ class AppTheme {
   final BuildContext context;
 
   ThemeData get theme => ThemeData.light().copyWith(
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: ButtonStyle(
-            padding: MaterialStateProperty.all<EdgeInsets>(
-              const EdgeInsets.all(24),
+          outlinedButtonTheme: OutlinedButtonThemeData(
+        style: ButtonStyle(
+          padding: MaterialStateProperty.all<EdgeInsets>(
+            const EdgeInsets.all(24),
+          ),
+          textStyle: MaterialStateProperty.all<TextStyle?>(
+            context.general.textTheme.titleMedium,
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          shape: MaterialStateProperty.all<OutlinedBorder>(
+            RoundedRectangleBorder(
+              borderRadius: context.border.normalBorderRadius,
             ),
-            textStyle: MaterialStateProperty.all<TextStyle?>(
-              context.general.textTheme.titleMedium,
-            ),
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
           ),
         ),
-      );
+      ));
 }

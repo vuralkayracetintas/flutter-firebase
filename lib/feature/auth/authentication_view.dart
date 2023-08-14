@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart' as firebase;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
@@ -37,31 +36,32 @@ class _AuthenticationViewState extends ConsumerState<AuthenticationView> {
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding: context.padding.low,
+            padding: context.padding.normal,
             child: Column(
               children: [
                 _Header(context),
-                Padding(
-                  padding: context.padding.normal,
-                  child: firebase.FirebaseUIActions(
-                    actions: [
-                      AuthStateChangeAction<SignedIn>((context, state) {
-                        if (state.user != null) {
-                          checkUser(state.user);
-                        } else {
-                          Navigator.pushReplacementNamed(context, '/profile');
-                        }
-                      }),
-                    ],
-                    child: firebase.LoginView(
-                      action: AuthAction.signIn,
-                      providers: firebase.FirebaseUIAuth.providersFor(
-                        FirebaseAuth.instance.app,
-                      ),
+                SizedBox(
+                  height: 10,
+                ),
+                firebase.FirebaseUIActions(
+                  actions: [
+                    AuthStateChangeAction<SignedIn>((context, state) {
+                      if (state.user != null) {
+                        checkUser(state.user);
+                      } else {
+                        Navigator.pushReplacementNamed(context, '/profile');
+                      }
+                    }),
+                  ],
+                  child: firebase.LoginView(
+                    action: AuthAction.signIn,
+                    providers: firebase.FirebaseUIAuth.providersFor(
+                      FirebaseAuth.instance.app,
                     ),
                   ),
                 ),
                 if (ref.watch(authProvider).isRedirect)
+                  // continue to app button
                   TextButton(
                     onPressed: () {},
                     child: Text(
@@ -69,7 +69,7 @@ class _AuthenticationViewState extends ConsumerState<AuthenticationView> {
                       style: context.general.textTheme.bodySmall
                           ?.copyWith(decoration: TextDecoration.underline),
                     ),
-                  )
+                  ),
               ],
             ),
           ),
