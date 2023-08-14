@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase/feature/auth/authentication_view.dart';
+import 'package:flutter_firebase/feature/home/home_view.dart';
 import 'package:flutter_firebase/product/initialize/app_theme.dart';
 
 import 'package:flutter_firebase/product/initialize/application_start.dart';
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       //   useMaterial3: true,
       // ),
-      home: const AuthenticationView(),
+      home: const HomeView(),
     );
   }
 }

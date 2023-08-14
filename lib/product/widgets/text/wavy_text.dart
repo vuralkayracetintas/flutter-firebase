@@ -7,9 +7,9 @@ import 'package:flutter_firebase/product/constans/color_constants.dart';
 
 class WavyBoldText extends StatelessWidget {
   const WavyBoldText({
-    Key? key,
     required this.title,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
 
@@ -20,7 +20,7 @@ class WavyBoldText extends StatelessWidget {
       animatedTexts: [
         WavyAnimatedText(
           title,
-          textStyle: context.textTheme.headlineSmall?.copyWith(
+          textStyle: context.general.textTheme.headlineSmall?.copyWith(
             color: ColorConstants.white,
           ),
         ),

@@ -40,7 +40,7 @@ class _SplashViewState extends ConsumerState<SplashView>
             IconConstants.appIcon.toImage,
             Padding(
               padding: context.padding.onlyTopLow,
-              child: const WavyBoldText(title: StringConstrans.appName),
+              child: const WavyBoldText(title: StringConstants.appName),
             ),
           ],
         ),

@@ -4,6 +4,7 @@ import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/feature/auth/authentication_provider.dart';
 import 'package:flutter_firebase/product/constans/index.dart';
+import 'package:flutter_firebase/product/widgets/text/title_text.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kartal/kartal.dart';
 
@@ -39,8 +40,8 @@ class _AuthenticationViewState extends ConsumerState<AuthenticationView> {
             padding: context.padding.normal,
             child: Column(
               children: [
-                _Header(context),
-                SizedBox(
+                _header(context),
+                const SizedBox(
                   height: 10,
                 ),
                 firebase.FirebaseUIActions(
@@ -65,7 +66,7 @@ class _AuthenticationViewState extends ConsumerState<AuthenticationView> {
                   TextButton(
                     onPressed: () {},
                     child: Text(
-                      StringConstrans.loginContinueApp,
+                      StringConstants.loginContinueApp,
                       style: context.general.textTheme.bodySmall
                           ?.copyWith(decoration: TextDecoration.underline),
                     ),
@@ -78,18 +79,15 @@ class _AuthenticationViewState extends ConsumerState<AuthenticationView> {
     );
   }
 
-  Column _Header(BuildContext context) {
-    return Column(
+  Column _header(BuildContext context) {
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          StringConstrans.loginWelcomeBack,
-          style: context.general.textTheme.headlineSmall
-              ?.copyWith(fontWeight: FontWeight.bold),
+        TitleText(
+          value: StringConstants.loginWelcomeBack,
         ),
-        Text(
-          StringConstrans.loginWelcomeDetails,
-          style: context.general.textTheme.titleMedium,
+        TitleText(
+          value: StringConstants.loginWelcomeDetails,
         ),
       ],
     );
