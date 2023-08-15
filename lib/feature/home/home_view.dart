@@ -3,6 +3,7 @@ import 'package:flutter_firebase/feature/home/home_provider.dart';
 import 'package:flutter_firebase/feature/home/sub_view/home_news_list_view.dart';
 import 'package:flutter_firebase/product/constans/index.dart';
 import 'package:flutter_firebase/product/enums/index.dart';
+import 'package:flutter_firebase/product/models/tag.dart';
 import 'package:flutter_firebase/product/widgets/card/home_news_card.dart';
 import 'package:flutter_firebase/product/widgets/text/subtitle_text.dart';
 import 'package:flutter_firebase/product/widgets/text/title_text.dart';
@@ -173,22 +174,24 @@ class _BrowseHorizontalListView extends ConsumerWidget {
   }
 }
 
-class _TagListView extends StatelessWidget {
+class _TagListView extends ConsumerWidget {
   const _TagListView();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final tagItems = ref.watch(_homeProvider).tags ?? [];
     return SizedBox(
       height: context.sized.dynamicHeight(0.1),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: 20,
+        itemCount: tagItems.length,
         itemBuilder: (BuildContext context, int index) {
-          if (index.isOdd) {
-            return const _ActiveChip();
+          final tagItem = tagItems[index];
+          if (tagItem.active ?? false) {
+            return _ActiveChip(tagItem);
           }
 
-          return const _PassiveChip();
+          return _PassiveChip(tagItem);
         },
       ),
     );

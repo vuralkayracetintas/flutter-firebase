@@ -1,48 +1,54 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
+import 'package:flutter_firebase/product/utility/firebase/firebase_utility.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:flutter_firebase/product/models/news.dart';
 import 'package:flutter_firebase/product/models/tag.dart';
 import 'package:flutter_firebase/product/utility/firebase/firebase_collections.dart';
 
-class HomeNotifier extends StateNotifier<HomeState> {
+class HomeNotifier extends StateNotifier<HomeState> with FirebaseUtility {
   HomeNotifier() : super(const HomeState());
 
   Future<void> fetchNews() async {
-    final newsCollectionReferance = FirebaseCollections.news.referance;
+    final items = fetchList<News, News>(const News(), FirebaseCollections.news);
+    // final newsCollectionReferance = FirebaseCollections.news.referance;
 
-    final response = await newsCollectionReferance.withConverter(
-      fromFirestore: (snapshot, options) {
-        return const News().fromFirebase(snapshot);
-      },
-      toFirestore: (value, options) {
-        return value.toJson();
-      },
-    ).get();
+    // final response = await newsCollectionReferance.withConverter(
+    //   fromFirestore: (snapshot, options) {
+    //     return const News().fromFirebase(snapshot);
+    //   },
+    //   toFirestore: (value, options) {
+    //     return value.toJson();
+    //   },
+    // ).get();
 
-    if (response.docs.isNotEmpty) {
-      final values = response.docs.map((e) => e.data()).toList();
-      state = state.copyWith(news: values);
-    }
+    // if (response.docs.isNotEmpty) {
+    //   final values = response.docs.map((e) => e.data()).toList();
+    //   state = state.copyWith(news: values);
+    // }
   }
 
   Future<void> fetchTags() async {
-    final newsCollectionReferance = FirebaseCollections.tag.referance;
+    final items =
+        await fetchList<Tag, Tag>(const Tag(), FirebaseCollections.tag);
+    state = state.copyWith(tags: items);
 
-    final response = await newsCollectionReferance.withConverter<Tag>(
-      fromFirestore: (snapshot, options) {
-        return const Tag().fromFirebase(snapshot);
-      },
-      toFirestore: (value, options) {
-        return value.toJson();
-      },
-    ).get();
+    // final newsCollectionReferance = FirebaseCollections.tag.referance;
 
-    if (response.docs.isNotEmpty) {
-      final values = response.docs.map((e) => e.data()).toList();
-      state = state.copyWith(tags: values);
-    }
+    // final response = await newsCollectionReferance.withConverter<Tag>(
+    //   fromFirestore: (snapshot, options) {
+    //     return const Tag().fromFirebase(snapshot);
+    //   },
+    //   toFirestore: (value, options) {
+    //     return value.toJson();
+    //   },
+    // ).get();
+
+    // if (response.docs.isNotEmpty) {
+    //   final values = response.docs.map((e) => e.data()).toList();
+    //   state = state.copyWith(tags: values);
+    // }
   }
 
   Future<void> fecthAndLoad() async {
