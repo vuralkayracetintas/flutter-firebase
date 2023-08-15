@@ -24,7 +24,6 @@ class WavyBoldText extends StatelessWidget {
           ),
         ),
       ],
-      isRepeatingAnimation: true,
     );
   }
 }

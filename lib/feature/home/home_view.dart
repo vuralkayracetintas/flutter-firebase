@@ -1,117 +1,59 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_firebase/product/models/news.dart';
-// import 'package:flutter_firebase/product/utility/exception/exception.dart';
-// import 'package:kartal/kartal.dart';
-
-// class HomeView extends StatefulWidget {
-//   const HomeView({super.key});
-
-//   @override
-//   State<HomeView> createState() => _HomeViewState();
-// }
-
-// class _HomeViewState extends State<HomeView> {
-//   @override
-//   Widget build(BuildContext context) {
-//     final CollectionReference news =
-//         FirebaseFirestore.instance.collection('news');
-
-//     final response = news.withConverter(
-//       fromFirestore: (snapshot, options) {
-//         return const News().fromFirebase(snapshot);
-//       },
-//       toFirestore: (value, options) {
-//         // ignore: unnecessary_null_comparison
-//         if (value == null) throw FirebaseCustomException('$value not null');
-//         return value.toJson();
-//       },
-//     ).get();
-
-//     return Scaffold(
-//       appBar: AppBar(),
-//       body: FutureBuilder(
-//         future: response,
-//         builder: (
-//           BuildContext context,
-//           AsyncSnapshot<QuerySnapshot<News>> snapshot,
-//         ) {
-//           switch (snapshot.connectionState) {
-//             case ConnectionState.none:
-//               return const Text('none');
-//             case ConnectionState.waiting:
-//               return const CircularProgressIndicator();
-//             case ConnectionState.active:
-//               return const Text('active');
-//             case ConnectionState.done:
-//               if (snapshot.hasError) {
-//                 return Text(snapshot.error.toString());
-//               }
-//               if (snapshot.hasData) {
-//                 final values =
-//                     snapshot.data!.docs.map((e) => e.data()).toList();
-//                 return ListView.builder(
-//                   itemCount: values.length,
-//                   itemBuilder: (BuildContext context, int index) {
-//                     return Card(
-//                       child: Column(
-//                         children: [
-//                           // Image.network(
-//                           //   values[index].backgroundImage ?? '',
-//                           //   height: context.sized.dynamicHeight(0.1),
-//                           // ),
-//                           Image.network(
-//                             'https://firebasestorage.googleapis.com/v0/b/flutter-full-eadb7.appspot.com/o/beyaz_saray.jpeg?alt=media&token=53270cfe-b6eb-43b2-aea1-220faa053897',
-//                           ),
-//                           Text(
-//                             values[index].title ?? '',
-//                             style: context.general.textTheme.labelLarge,
-//                           ),
-//                           Text(values[index].category ?? ''),
-//                         ],
-//                       ),
-//                     );
-//                   },
-//                 );
-//               }
-//               return const Text('done');
-//           }
-//         },
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/feature/home/home_provider.dart';
+import 'package:flutter_firebase/feature/home/sub_view/home_news_list_view.dart';
 import 'package:flutter_firebase/product/constans/index.dart';
 import 'package:flutter_firebase/product/enums/index.dart';
+import 'package:flutter_firebase/product/widgets/card/home_news_card.dart';
 import 'package:flutter_firebase/product/widgets/text/subtitle_text.dart';
 import 'package:flutter_firebase/product/widgets/text/title_text.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kartal/kartal.dart';
-
 part 'sub_view/home_chip.dart';
 
-class HomeView extends StatefulWidget {
+final _homeProvider = StateNotifierProvider<HomeNotifier, HomeState>((ref) {
+  return HomeNotifier();
+});
+
+class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewState extends ConsumerState<HomeView> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(
+      () {
+        ref.read(_homeProvider.notifier).fecthAndLoad();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
       child: SafeArea(
-        child: ListView(
-          padding: context.padding.low,
-          children: const [
-            _Header(),
-            _CustomField(),
-            _TagListView(),
-            _BrowseHorizontalListView(),
-            _RecommendedHeader(),
-            _RecommendedListView()
+        child: Stack(
+          children: [
+            ListView(
+              padding: context.padding.low,
+              children: const [
+                _Header(),
+                _CustomField(),
+                _TagListView(),
+                _BrowseHorizontalListView(),
+                _RecommendedHeader(),
+                _RecommendedListView(),
+                // HomeListView()
+              ],
+            ),
+            if (ref.watch(_homeProvider).isLoading ?? false)
+              const Center(
+                child: CircularProgressIndicator(),
+              )
           ],
         ),
       ),
@@ -212,84 +154,21 @@ class _RecommendedHeader extends StatelessWidget {
   }
 }
 
-class _BrowseHorizontalListView extends StatelessWidget {
+class _BrowseHorizontalListView extends ConsumerWidget {
   const _BrowseHorizontalListView();
 
-  static const palaceImage =
-      'https://firebasestorage.googleapis.com/v0/b/flutter-full-eadb7.appspot.com/o/beyaz_saray.jpeg?alt=media&token=53270cfe-b6eb-43b2-aea1-220faa053897';
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final newsItem = ref.watch(_homeProvider).news ?? [];
     return SizedBox(
       height: context.sized.dynamicHeight(0.3),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: 20,
+        itemCount: newsItem.length,
         itemBuilder: (BuildContext context, int index) {
-          return const _HorizontalCard(palaceImage: palaceImage);
+          return HomeNewsCard(newsItem: newsItem[index]);
         },
       ),
-    );
-  }
-}
-
-class _HorizontalCard extends StatelessWidget {
-  const _HorizontalCard({
-    required this.palaceImage,
-  });
-
-  final String palaceImage;
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Padding(
-          padding: context.padding.onlyRightNormal,
-          child: Image.network(
-            _BrowseHorizontalListView.palaceImage,
-            errorBuilder: (context, error, stackTrace) => const Placeholder(),
-          ),
-        ),
-        Positioned.fill(
-          child: Padding(
-            padding: context.padding.low,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.bookmark_border,
-                    size: WidgetSize.iconNormal.value,
-                    color: ColorConstants.white,
-                  ),
-                ),
-                const Spacer(),
-                Padding(
-                  padding: context.padding.low,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SubTitleText(
-                        value: 'Beyaz Saray',
-                        color: ColorConstants.black,
-                      ),
-                      Text(
-                        'The latest situation in the presidential election',
-                        style:
-                            context.general.textTheme.headlineSmall?.copyWith(
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        )
-      ],
     );
   }
 }

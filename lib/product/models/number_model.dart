@@ -2,6 +2,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_firebase/product/utility/base/base_firebase_model.dart';
 
+// ignore: must_be_immutable
 class NumberModel extends Equatable
     with IdModel, BaseFirebaseModel<NumberModel> {
   NumberModel({

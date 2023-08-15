@@ -1,0 +1,48 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
+
+import 'package:flutter_firebase/product/utility/base/base_firebase_model.dart';
+
+@immutable
+class Tag with EquatableMixin, IdModel, BaseFirebaseModel<Tag> {
+  const Tag({
+    this.name,
+    this.active,
+    this.id,
+  });
+
+  final String? name;
+  final bool? active;
+  @override
+  final String? id;
+
+  @override
+  List<Object?> get props => [name, active];
+
+  Tag copyWith({
+    String? name,
+    bool? active,
+  }) {
+    return Tag(
+      name: name ?? this.name,
+      active: active ?? this.active,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'active': active,
+    };
+  }
+
+  @override
+  Tag fromJson(Map<String, dynamic> json) {
+    name:
+    json['name'] as String?;
+    active:
+    json['active'] as bool?;
+    throw UnimplementedError();
+  }
+}
