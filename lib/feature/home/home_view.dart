@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/feature/home/home_provider.dart';
 import 'package:flutter_firebase/feature/home/sub_view/home_news_list_view.dart';
+import 'package:flutter_firebase/feature/home/sub_view/home_search_delegate.dart';
 import 'package:flutter_firebase/product/constans/index.dart';
 import 'package:flutter_firebase/product/enums/index.dart';
+import 'package:flutter_firebase/product/models/recommended.dart';
 import 'package:flutter_firebase/product/models/tag.dart';
 import 'package:flutter_firebase/product/widgets/card/home_news_card.dart';
+import 'package:flutter_firebase/product/widgets/card/recommended_card.dart';
 import 'package:flutter_firebase/product/widgets/text/subtitle_text.dart';
 import 'package:flutter_firebase/product/widgets/text/title_text.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -62,13 +65,21 @@ class _HomeViewState extends ConsumerState<HomeView> {
   }
 }
 
-class _CustomField extends StatelessWidget {
+class _CustomField extends ConsumerWidget {
   const _CustomField();
 
   @override
-  Widget build(BuildContext context) {
-    return const TextField(
-      decoration: InputDecoration(
+  Widget build(BuildContext context, WidgetRef ref) {
+    return TextField(
+      onTap: () {
+        final results = showSearch(
+          context: context,
+          delegate: HomeSearchDelegate(
+            ref.read(_homeProvider.notifier).fullTagList,
+          ),
+        );
+      },
+      decoration: const InputDecoration(
         prefixIcon: Icon(Icons.search),
         suffixIcon: Icon(Icons.mic_outlined),
         border: OutlineInputBorder(borderSide: BorderSide.none),
@@ -80,55 +91,19 @@ class _CustomField extends StatelessWidget {
   }
 }
 
-class _RecommendedListView extends StatelessWidget {
+class _RecommendedListView extends ConsumerWidget {
   const _RecommendedListView();
 
-  static const cmImage =
-      'https://firebasestorage.googleapis.com/v0/b/flutter-full-eadb7.appspot.com/o/lpc.jpeg?alt=media&token=5f815b54-e635-41b4-895d-1f7f3ec0328a';
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final value = ref.watch(_homeProvider).recommended ?? [];
     return ListView.builder(
-      itemCount: 5,
+      itemCount: value.length,
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
       itemBuilder: (context, index) {
-        return const _RecommendedCard(cmImage: cmImage);
+        return RecommendedCard(recommended: value[index]);
       },
-    );
-  }
-}
-
-class _RecommendedCard extends StatelessWidget {
-  const _RecommendedCard({
-    required this.cmImage,
-  });
-
-  final String cmImage;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: context.padding.onlyTopLow,
-      child: Row(
-        children: [
-          Image.network(
-            _RecommendedListView.cmImage,
-            errorBuilder: (context, error, stackTrace) => const Placeholder(),
-            height: 96,
-          ),
-          const Expanded(
-            child: ListTile(
-              title: Text(
-                'Computer Science',
-              ),
-              subtitle: Text(
-                'I learn Flutter and Dart',
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
