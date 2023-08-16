@@ -5,6 +5,7 @@ import 'package:kartal/kartal.dart';
 class RecommendedCard extends StatelessWidget {
   const RecommendedCard({
     required this.recommended,
+    super.key,
   });
 
   final Recommended recommended;

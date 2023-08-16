@@ -1,11 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:kartal/kartal.dart';
-
 import 'package:flutter_firebase/product/constans/color_constants.dart';
 import 'package:flutter_firebase/product/enums/widget_size.dart';
 import 'package:flutter_firebase/product/models/news.dart';
 import 'package:flutter_firebase/product/widgets/text/subtitle_text.dart';
+import 'package:kartal/kartal.dart';
 
 class HomeNewsCard extends StatelessWidget {
   const HomeNewsCard({

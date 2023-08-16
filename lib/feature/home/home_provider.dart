@@ -1,12 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:flutter_firebase/product/models/news.dart';
 import 'package:flutter_firebase/product/models/recommended.dart';
 import 'package:flutter_firebase/product/models/tag.dart';
 import 'package:flutter_firebase/product/utility/firebase/firebase_collections.dart';
 import 'package:flutter_firebase/product/utility/firebase/firebase_utility.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeNotifier extends StateNotifier<HomeState> with FirebaseUtility {
   HomeNotifier() : super(const HomeState());
