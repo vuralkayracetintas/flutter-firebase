@@ -23,3 +23,13 @@ class VersionCustomException implements Exception {
     return '$this';
   }
 }
+
+class ItemCreateException implements Exception {
+  ItemCreateException(this.description);
+
+  final String description;
+  @override
+  String toString() {
+    return '$this $description';
+  }
+}

@@ -19,4 +19,12 @@ class StringConstants {
   static const String seeAll = 'seeAll';
 
   static const String search = 'Search';
+  static const String buttonSave = 'Save';
+
+  static const String dropdownHint = 'Select a category';
+  static const String addItemTitle = 'Add item';
+
+  static const String homeBrowse = 'browse';
+
+  static const String homeMessage = 'message';
 }

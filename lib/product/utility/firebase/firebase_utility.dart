@@ -6,7 +6,7 @@ mixin FirebaseUtility {
     R data,
     FirebaseCollections collections,
   ) async {
-    final newsCollectionReference = collections.referance;
+    final newsCollectionReference = collections.reference;
     final response = await newsCollectionReference.withConverter<T>(
       fromFirestore: (snapshot, options) {
         return data.fromFirebase(snapshot);

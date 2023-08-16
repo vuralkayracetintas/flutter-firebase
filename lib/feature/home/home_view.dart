@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/feature/home/home_create/home_create.dart';
 import 'package:flutter_firebase/feature/home/home_provider.dart';
 import 'package:flutter_firebase/product/constans/index.dart';
 import 'package:flutter_firebase/product/models/tag.dart';
@@ -34,8 +35,21 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SafeArea(
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () async {
+          final response = await context.navigateToPage<bool?>(
+            const HomeCreateView(),
+            type: SlideType.BOTTOM,
+          );
+
+          if (response ?? false) {
+            await ref.read(_homeProvider.notifier).fecthAndLoad();
+          }
+        },
+      ),
+      body: SafeArea(
         child: Stack(
           children: [
             ListView(

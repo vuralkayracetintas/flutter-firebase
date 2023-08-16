@@ -15,7 +15,7 @@ class HomeNotifier extends StateNotifier<HomeState> with FirebaseUtility {
 
   Future<void> fetchNews() async {
     // final items = fetchList<News, News>(const News(), FirebaseCollections.news);
-    final newsCollectionReferance = FirebaseCollections.news.referance;
+    final newsCollectionReferance = FirebaseCollections.news.reference;
 
     final response = await newsCollectionReferance.withConverter(
       fromFirestore: (snapshot, options) {
@@ -37,7 +37,7 @@ class HomeNotifier extends StateNotifier<HomeState> with FirebaseUtility {
     //     await fetchList<Tag, Tag>(const Tag(), FirebaseCollections.tag);
     // state = state.copyWith(tags: items);
 
-    final newsCollectionReferance = FirebaseCollections.tag.referance;
+    final newsCollectionReferance = FirebaseCollections.tag.reference;
 
     final response = await newsCollectionReferance.withConverter<Tag>(
       fromFirestore: (snapshot, options) {

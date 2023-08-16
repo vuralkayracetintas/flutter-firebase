@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum FirebaseCollections {
-  version,
   news,
   tag,
-  recommended;
+  recommended,
+  version,
+  category;
 
-  CollectionReference get referance =>
+  CollectionReference get reference =>
       FirebaseFirestore.instance.collection(name);
 }

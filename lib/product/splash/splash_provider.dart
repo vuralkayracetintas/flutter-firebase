@@ -32,7 +32,7 @@ class SplashProvider extends StateNotifier<SplashState> {
 
   Future<String?> getVersionNumberFromDataBase() async {
     if (kIsWeb) return null;
-    final response = await FirebaseCollections.version.referance
+    final response = await FirebaseCollections.version.reference
         .withConverter<NumberModel>(
           fromFirestore: (snapshot, options) =>
               NumberModel().fromFirebase(snapshot),

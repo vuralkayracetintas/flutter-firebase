@@ -15,7 +15,7 @@ class HomeListView extends StatefulWidget {
 class _HomeListViewState extends State<HomeListView> {
   @override
   Widget build(BuildContext context) {
-    final news = FirebaseCollections.news.referance;
+    final news = FirebaseCollections.news.reference;
     final response = news.withConverter(
       fromFirestore: (snapshot, options) {
         return const News().fromFirebase(snapshot);

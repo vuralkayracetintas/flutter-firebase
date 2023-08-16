@@ -17,7 +17,7 @@ dependencies:
 
 
 
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.5
 
   #core
   easy_localization: ^3.0.2
@@ -32,10 +32,12 @@ dependencies:
   firebase_auth: ^4.7.2
   firebase_ui_auth: ^1.6.2
   firebase_ui_oauth_google: ^1.2.7
+  firebase_storage: ^11.2.5
 
   #utility
   animated_text_kit: ^4.2.2
   shared_preferences: ^2.2.0
+  image_picker: ^1.0.2
 
 dev_dependencies:
   flutter_test:
