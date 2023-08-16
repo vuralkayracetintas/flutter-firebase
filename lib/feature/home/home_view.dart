@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/feature/home/home_provider.dart';
-import 'package:flutter_firebase/feature/home/sub_view/home_news_list_view.dart';
 import 'package:flutter_firebase/feature/home/sub_view/home_search_delegate.dart';
 import 'package:flutter_firebase/product/constans/index.dart';
-import 'package:flutter_firebase/product/enums/index.dart';
-import 'package:flutter_firebase/product/models/recommended.dart';
 import 'package:flutter_firebase/product/models/tag.dart';
 import 'package:flutter_firebase/product/widgets/card/home_news_card.dart';
 import 'package:flutter_firebase/product/widgets/card/recommended_card.dart';
@@ -71,14 +68,7 @@ class _CustomField extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return TextField(
-      onTap: () {
-        final results = showSearch(
-          context: context,
-          delegate: HomeSearchDelegate(
-            ref.read(_homeProvider.notifier).fullTagList,
-          ),
-        );
-      },
+      onTap: () {},
       decoration: const InputDecoration(
         prefixIcon: Icon(Icons.search),
         suffixIcon: Icon(Icons.mic_outlined),
